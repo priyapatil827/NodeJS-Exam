@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { base_uri } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,7 +15,6 @@ export default function SignUp() {
 
   const [loading, setLoading] = useState(false);
 
-  // input change handler
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -20,7 +22,6 @@ export default function SignUp() {
     });
   };
 
-  // signup handler
   const handleSignUp = async (e) => {
     e.preventDefault();
 
@@ -31,19 +32,11 @@ export default function SignUp() {
 
     try {
       setLoading(true);
-
-  
       const res = await axios.post(`${base_uri}/auth/signup`, formData);
-
       alert(res.data.message || "Signup successful ✅");
+      setFormData({ name: "", email: "", password: "", role: "" });
 
-      // clear form
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        role: "",
-      });
+      navigate("/signin");
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.message || "Signup failed ❌");
@@ -53,47 +46,47 @@ export default function SignUp() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-gray-100 via-blue-50 to-gray-200 p-4">
       <form
-        className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md"
         onSubmit={handleSignUp}
+        className="bg-white/90 backdrop-blur-sm p-10 rounded-3xl shadow-2xl w-full max-w-md border border-gray-200 animate-fadeIn"
       >
-        <h2 className="text-2xl font-bold text-blue-600 mb-6 text-center">
-          Create Account
+        <h2 className="text-3xl font-extrabold text-center text-blue-700 mb-8 animate-pulse">
+          Create Your Account
         </h2>
 
         <input
           type="text"
           name="name"
-          placeholder="Enter Name"
+          placeholder="Your Name"
           value={formData.name}
           onChange={handleChange}
-          className="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-5 px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition-all duration-300 placeholder-blue-300 text-blue-700"
         />
 
         <input
           type="email"
           name="email"
-          placeholder="Enter Email"
+          placeholder="Email Address"
           value={formData.email}
           onChange={handleChange}
-          className="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-5 px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition-all duration-300 placeholder-blue-300 text-blue-700"
         />
 
         <input
           type="password"
           name="password"
-          placeholder="Enter Password"
+          placeholder="Password"
           value={formData.password}
           onChange={handleChange}
-          className="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-5 px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition-all duration-300 placeholder-blue-300 text-blue-700"
         />
 
         <select
           name="role"
           value={formData.role}
           onChange={handleChange}
-          className="w-full mb-6 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-7 px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition-all duration-300 text-blue-700"
         >
           <option value="">Select Role</option>
           <option value="user">User</option>
@@ -103,10 +96,20 @@ export default function SignUp() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 hover:scale-105 transform transition duration-300 shadow-lg shadow-blue-200/50"
         >
           {loading ? "Signing Up..." : "Sign Up"}
         </button>
+
+        <p className="text-sm text-center mt-6 text-blue-700">
+          Already have an account?{" "}
+          <span
+            onClick={() => navigate("/signin")}
+            className="font-semibold cursor-pointer hover:text-blue-900 hover:underline transition"
+          >
+            Sign In
+          </span>
+        </p>
       </form>
     </div>
   );

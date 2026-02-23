@@ -17,13 +17,8 @@ export default function SignIn() {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await axios.post(
-        `${base_uri}/auth/signin`,
-        formData
-      );
-
+      const res = await axios.post(`${base_uri}/auth/signin`, formData);
       alert("Login successful ✅");
       navigate("/home");
     } catch (err) {
@@ -33,45 +28,47 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-gray-100 via-blue-50 to-gray-200 p-4">
       <form
         onSubmit={handleSignIn}
-        className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md"
+        className="bg-white/90 backdrop-blur-sm p-10 rounded-3xl shadow-2xl w-full max-w-md border border-gray-200 animate-fadeIn"
       >
-        <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
-          Sign In
+        <h2 className="text-3xl font-extrabold text-center text-blue-700 mb-8 animate-pulse">
+          Welcome Back
         </h2>
 
         {/* Email */}
         <input
           name="email"
           type="email"
-          placeholder="Enter Email"
+          placeholder="Your Email"
           onChange={handleChange}
-          className="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-5 px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition-all duration-300 placeholder-blue-300 text-blue-700"
         />
 
         {/* Password */}
         <input
           name="password"
           type="password"
-          placeholder="Enter Password"
+          placeholder="Your Password"
           onChange={handleChange}
-          className="w-full mb-6 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-7 px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition-all duration-300 placeholder-blue-300 text-blue-700"
         />
 
         {/* Button */}
         <button
           type="submit"
-          onClick={handleSignIn}
-          className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-300"
+          className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 hover:scale-105 transform transition duration-300 shadow-lg shadow-blue-200/50"
         >
           Sign In
         </button>
 
-        <p className="text-sm text-center mt-4 text-gray-600">
+        <p className="text-sm text-center mt-5 text-blue-700">
           Don’t have an account?{" "}
-          <span className="text-blue-600 font-semibold cursor-pointer hover:underline">
+          <span
+            onClick={() => navigate("/signup")}
+            className="font-semibold cursor-pointer hover:text-blue-900 hover:underline transition"
+          >
             Sign Up
           </span>
         </p>

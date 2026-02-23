@@ -1,12 +1,34 @@
 import Product from "../models/productModel.js";
 
 // ADD PRODUCT
+
 export const addProduct = async (req, res) => {
   try {
-    const product = await Product.create(req.body);
-    res.status(201).json({ message: "Product added", product });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    const { name, price, category, stock } = req.body;
+
+    // Check for uploaded file
+    let imagePath = "";
+    if (req.file) {
+      imagePath = `/uploads/${req.file.filename}`;
+    }
+
+    const newProduct = new Product({
+      name,
+      price,
+      category,
+      stock,
+      image: imagePath,
+    });
+
+    await newProduct.save();
+    res
+      .status(201)
+      .json({ message: "Product added successfully", product: newProduct });
+  } catch (error) {
+    console.error(error); // <-- Check the exact error
+    res
+      .status(500)
+      .json({ message: "Failed to add product", error: error.message });
   }
 };
 
@@ -33,11 +55,9 @@ export const getProductById = async (req, res) => {
 // UPDATE PRODUCT
 export const updateProduct = async (req, res) => {
   try {
-    const updated = await Product.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    const updated = await Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     res.json({ message: "Product updated", updated });
   } catch (err) {
     res.status(500).json({ message: err.message });
