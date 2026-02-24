@@ -16,38 +16,71 @@ Full-stack **E-commerce app** with:
 
 ecommerce-platform/
 ├─ backend/
+
 │  ├─ config/
+
 │  │  └─ db.js                # MongoDB connection
+
 │  ├─ controllers/
+
 │  │  ├─ authController.js    # SignUp, SignIn, Logout
+
 │  │  └─ productController.js # CRUD for products
+
 │  ├─ middleware/
+
 │  │  └─ authMiddleware.js    # JWT verification, role protection
+
 │  ├─ models/
+
 │  │  ├─ User.js
+
 │  │  └─ Product.js
+
 │  ├─ routes/
+
 │  │  ├─ authRoute.js
+
 │  │  └─ productRoute.js
+
 │  ├─ server.js
+
 │  └─ .env
+
 │
+
 ├─ frontend/
+
 │  ├─ public/
+
 │  ├─ src/
+
 │  │  ├─ Components/
+
 │  │  │  ├─ SignUp.jsx
+
 │  │  │  ├─ SignIn.jsx
+
 │  │  │  ├─ Dashboard.jsx
+
 │  │  │  ├─ Navbar.jsx
+
 │  │  │  ├─ AddProduct.jsx
+
 │  │  │  └─ EditProduct.jsx
+
 │  │  ├─ api/
+
 │  │  │  └─ api.js
+
 │  │  ├─ App.jsx
+
 │  │  └─ main.jsx
+
 │  ├─ package.json
+
 │  └─ vite.config.js
+
 
 
 
