@@ -12,15 +12,12 @@ export default function AddProduct() {
   const [imageFile, setImageFile] = useState(null); // store actual file
   const [preview, setPreview] = useState(null); // for live preview
 
-  // handle text input changes
   const handleChange = (e) => setData({ ...data, [e.target.name]: e.target.value });
 
-  // handle file input
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImageFile(file);
 
-    // create preview
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => setPreview(reader.result);
@@ -96,16 +93,14 @@ export default function AddProduct() {
           className="w-full mb-5 px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition-all duration-300 placeholder-blue-300 text-blue-700"
         />
 
-        {/* Image File Input */}
         <input
           type="file"
-          name="image" // must match multer
+          name="image" 
           accept="image/*"
           onChange={handleImageChange}
           className="w-full mb-3"
         />
 
-        {/* Image Preview */}
         {preview && (
           <div className="w-full mb-5">
             <p className="text-gray-500 mb-2 text-sm">Image Preview:</p>

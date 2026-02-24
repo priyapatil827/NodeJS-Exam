@@ -5,7 +5,6 @@ import { addProduct, getProducts, getProductById, updateProduct, deleteProduct }
 
 const productRouter = express.Router();
 
-// Multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/"); // folder must exist
@@ -18,7 +17,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// Add product route with file upload
 productRouter.post("/add", upload.single("image"), addProduct);
 productRouter.get("/", getProducts);
 productRouter.get("/:id", getProductById);

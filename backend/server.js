@@ -8,11 +8,9 @@ import productRouter from "./routes/productRoutes.js";
 
 const app = express();
 
-// Middleware
 app.use(express.json());
 app.use(cookieParser());
 
-// Serve uploaded images statically
 app.use("/uploads", express.static(path.join(path.resolve(), "uploads")));
 
 app.use(
@@ -22,14 +20,14 @@ app.use(
   }),
 );
 
-// Connect to MongoDB
+
 connectDB();
 
-// Routes
+
 app.use("/api/auth", authRouter);
 app.use("/api/products", productRouter);
 
-// Start server
+
 app.listen(5000, () => {
   console.log("Server is running on port 5000");
 });

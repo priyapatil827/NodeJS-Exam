@@ -2,7 +2,6 @@ import { User } from "../models/authModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-// 🔥 JWT SECRET (hardcoded)
 const JWT_SECRET = "mySecretKey123";
 
 export const signup = async (req, res) => {
@@ -52,12 +51,9 @@ export const signin = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // ✅ JWT SIGN
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      JWT_SECRET,
-      { expiresIn: "1d" }
-    );
+    const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, {
+      expiresIn: "1d",
+    });
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -80,6 +76,11 @@ export const signin = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+    path: "/", // must match the cookie path
+  });
   res.json({ message: "Logged out successfully" });
 };

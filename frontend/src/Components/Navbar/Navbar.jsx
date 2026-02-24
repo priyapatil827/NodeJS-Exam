@@ -13,7 +13,7 @@ export default function Navbar() {
       });
 
       alert("Logged out");
-      navigate("/signin");
+      navigate("/");
     } catch (err) {
       console.error(err);
     }

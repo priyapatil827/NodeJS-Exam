@@ -6,9 +6,8 @@ import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null); // For modal
+  const [selectedProduct, setSelectedProduct] = useState(null); 
 
-  // Fetch products from backend
   const fetchProducts = async () => {
     try {
       const res = await axios.get(`${base_uri}/products`, { withCredentials: true });
@@ -19,11 +18,10 @@ export default function Dashboard() {
     }
   };
 
-  // Delete product
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      await axios.delete(`${base_uri}/products/delete/${id}`, { withCredentials: true });
+      await axios.delete(`${base_uri}/products/delete/${id}`);
       alert("Product deleted ✅");
       fetchProducts();
     } catch (err) {
@@ -50,11 +48,10 @@ export default function Dashboard() {
                 key={p._id}
                 className="bg-white rounded-2xl shadow-md p-5 hover:shadow-lg transition flex flex-col"
               >
-                {/* Product Image */}
                 <img
                   src={
                     p.image
-                      ? `${base_uri}${p.image}` // prepend base URI so frontend can access backend upload
+                      ? `${base_uri}${p.image}` 
                       : "https://dummyimage.com/150x150/cccccc/000000&text=No+Image"
                   }
                   alt={p.name}
@@ -64,14 +61,12 @@ export default function Dashboard() {
                   }
                 />
 
-                {/* Product Info */}
                 <h4 className="text-lg font-semibold text-gray-800 mb-2">{p.name}</h4>
                 <p className="text-gray-600 mb-2">
                   Price: <span className="font-medium">₹{p.price}</span>
                 </p>
                 <p className="text-gray-500 mb-4">Category: {p.category || "N/A"}</p>
 
-                {/* Buttons */}
                 <div className="mt-auto flex gap-2">
                   <button
                     onClick={() => setSelectedProduct(p)}
